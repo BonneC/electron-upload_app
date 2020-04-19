@@ -1,10 +1,14 @@
-const { app, BrowserWindow } = require('electron')
+const {app, BrowserWindow, ipcMain} = require('../electron')
 const path = require('path')
-require(path.resolve('menu.js'))
+const countdown = require(path.join(__dirname, '/countdown.js'))
+require(path.join(__dirname, '/menu.js'))
+let window
 
-function createWindow () {
+function createWindow() {
+
+    // const menu = require('menu.js')
     // Create the browser window.
-    const win = new BrowserWindow({
+    window = new BrowserWindow({
         width: 800,
         height: 600,
         webPreferences: {
@@ -13,7 +17,8 @@ function createWindow () {
     })
 
     // and load the index.html of the app.
-    win.loadFile('src/index.html')
+    window.loadURL(path.join('file://', __dirname, 'src/index.html'))
+    // window.loadFile('src/index.html')
 
 }
 
@@ -39,6 +44,8 @@ app.on('activate', () => {
     }
 })
 
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and require them here.
-
+ipcMain.on('demo-start', _ => {
+    countdown(count => {
+        window.webContents.send('countdown', count)
+    })
+})
