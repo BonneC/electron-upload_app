@@ -7,10 +7,13 @@ import BootstrapVue from 'bootstrap-vue';
 
 import router from './router'
 import store from './store'
+import Navbar from "./components/Navbar";
 
 
 Vue.use(BootstrapVue)
 Vue.config.productionTip = false
+
+Vue.component('app-navbar', Navbar)
 
 new Vue({
   router,
