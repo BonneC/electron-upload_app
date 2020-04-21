@@ -9,11 +9,28 @@ import router from './router'
 import store from './store'
 import Navbar from "./components/Navbar";
 
+import { ValidationProvider, extend } from 'vee-validate';
+import { required, alpha_num, min, image, ext } from 'vee-validate/dist/rules';
+import { setInteractionMode } from 'vee-validate';
+
+setInteractionMode('eager');
+
 
 Vue.use(BootstrapVue)
 Vue.config.productionTip = false
 
 Vue.component('app-navbar', Navbar)
+Vue.component('ValidationProvider', ValidationProvider)
+
+
+extend('required', {
+  ...required,
+  message: 'This field is required'
+});
+extend('alpha_num', alpha_num)
+extend('min', min)
+extend('ext', ext)
+extend('image', image)
 
 new Vue({
   router,
