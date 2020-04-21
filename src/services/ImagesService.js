@@ -18,5 +18,17 @@ export default {
     },
     getImage(id) {
         return apiClient.get('/gallery/' + id)
+    },
+    postImage(imageInfo) {
+        return apiClient.post('/gallery', imageInfo.upload_file
+        ,{
+            params: {
+                name: imageInfo.name,
+                category: imageInfo.category
+            },
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        })
     }
 }
