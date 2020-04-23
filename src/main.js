@@ -9,6 +9,9 @@ import router from './router'
 import store from './store'
 import Navbar from "./components/Navbar";
 
+import VModal from 'vue-js-modal'
+
+
 import {ValidationProvider, ValidationObserver, extend} from 'vee-validate';
 import {required, alpha_num, min, image, ext} from 'vee-validate/dist/rules';
 import {setInteractionMode} from 'vee-validate';
@@ -18,6 +21,8 @@ setInteractionMode('eager');
 
 Vue.use(BootstrapVue)
 Vue.config.productionTip = false
+
+Vue.use(VModal, {dialog: true})
 
 Vue.component('app-navbar', Navbar)
 Vue.component('ValidationProvider', ValidationProvider)
