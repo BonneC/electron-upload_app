@@ -22,7 +22,7 @@ setInteractionMode('eager');
 Vue.use(BootstrapVue)
 Vue.config.productionTip = false
 
-Vue.use(VModal, {dialog: true})
+Vue.use(VModal)
 
 Vue.component('app-navbar', Navbar)
 Vue.component('ValidationProvider', ValidationProvider)

@@ -30,5 +30,17 @@ export default {
                 'Content-Type': 'multipart/form-data'
             }
         })
+    },
+    putImage(imageInfo) {
+        return apiClient.put('/gallery/' + imageInfo.id, {}
+            ,{
+                params: {
+                    name: imageInfo.title,
+                    category: imageInfo.category
+                },
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
     }
 }
