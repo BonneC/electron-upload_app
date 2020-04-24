@@ -1,7 +1,8 @@
 <template>
     <div>
         <h1>List of The Images for {{category}}</h1>
-        <ImageCard v-for="image in images" :key="image.id" :image="image" @click.native="show(image)"></ImageCard>
+        <ImageCard class="show-image" v-for="image in images" :key="image.id" :image="image" @click.native="show(image)">
+        </ImageCard>
         <modal name="edit-modal" @before-open="beforeOpen">
             <ValidationObserver v-slot="{ handleSubmit, reset }" ref="form">
                 <form @submit.prevent="handleSubmit(onSubmit)" @reset.prevent="reset">
@@ -136,5 +137,6 @@
     .card {
         margin-left: 300px;
     }
+
 
 </style>
