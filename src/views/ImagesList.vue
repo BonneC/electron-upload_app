@@ -1,7 +1,11 @@
 <template>
     <div>
         <h1>List of The Images for {{category}}</h1>
-        <ImageCard class="show-image" v-for="image in images" :key="image.id" :image="image" @click.native="show(image)">
+        <ImageCard class="show-image"
+                   v-for="image in images" :key="image.id" :image="image"
+                   v-on:onClickEdit="showEdit"
+                   v-on:onClickDelete="showDelete"
+        >
         </ImageCard>
         <modal name="edit-modal" @before-open="beforeOpen">
             <ValidationObserver v-slot="{ handleSubmit, reset }" ref="form">
@@ -24,7 +28,7 @@
                             </select>
                         </div>
                         <div class="form-group col-md-2">
-                            <button type="submit" v-if="!disabled"  class="btn btn-primary">Submit</button>
+                            <button type="submit" v-if="!disabled" class="btn btn-primary">Submit</button>
                         </div>
                     </div>
                     <button type="button" v-if="disabled" @click="enableEdit" class="btn btn-primary">Edit</button>
@@ -32,6 +36,12 @@
                     <button type="button" class="btn btn-secondary">Cancel</button>
                 </form>
             </ValidationObserver>
+        </modal>
+        <modal name="delete-modal">
+            <h1>Delete image?</h1>
+            <button type="button" class="btn btn-primary" @click="onDelete">Yes</button>
+            <button type="button" class="btn btn-primary" @click="hide('delete-modal')">Cancel</button>
+
         </modal>
     </div>
 
@@ -80,10 +90,10 @@
                 this.cat = img.cat
                 this.id = img.id
             },
-            enableEdit(){
-              this.disabled = false
+            enableEdit() {
+                this.disabled = false
             },
-            show(image) {
+            showEdit(image) {
                 console.log('show')
                 console.log(image.id)
                 this.$modal.show('edit-modal', {
@@ -92,8 +102,24 @@
                     id: image.id
                 })
             },
-            hide() {
-                this.$modal.hide('edit-modal')
+            showDelete(image) {
+                console.log('Show Delete modal with id ' + image.id)
+                this.id = image.id
+                this.$modal.show('delete-modal')
+            },
+            onDelete() {
+                console.log('We gon delete' + this.id)
+                ImagesService.deleteImage(this.id).then(response => {
+                    console.log(response.data)
+                    this.getImages()
+                    this.hide('delete-modal')
+                })
+                    .catch(error => {
+                        console.log('error:' + error.response)
+                    })
+            },
+            hide(modal) {
+                this.$modal.hide(modal)
             },
             beforeOpen(event) {
                 this.disabled = true
@@ -114,7 +140,7 @@
                 ImagesService.putImage(image_info).then(response => {
                     console.log(response.data)
                     this.getImages()
-                    this.hide()
+                    this.hide('edit-modal')
                 })
                     .catch(error => {
                         console.log('error:' + error.response)

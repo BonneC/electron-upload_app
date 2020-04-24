@@ -8,17 +8,12 @@
                     <p>Category: {{image.category}}</p>
                     <!--                        <p class="card-text">{{image.description}}</p>-->
                 </div>
-                <input class="the-buttons" type="button" value=" Edit "/>
-                <input class="tmp" type="button" value=" Delete " @click="show"/>
+                <input class="the-buttons" type="button" value=" Edit " @click="emitClick('onClickEdit')"/>
+                <input class="tmp" type="button" value=" Delete " @click="emitClick('onClickDelete')"/>
             </div>
 
         </div>
-        <modal name="delete-modal">
-            <h1>Delete image?</h1>
-            <button type="button" class="btn btn-primary" @click="deleteImage">Yes</button>
-            <button type="button" class="btn btn-primary" @click="hide">Cancel</button>
 
-        </modal>
 
     </div>
 </template>
@@ -38,18 +33,10 @@
             this.image_url = 'http://localhost:8000/image/' + this.image.id
         },
         methods: {
-            emitClick() {
-                this.$emit('imageButton',)
-            },
-            deleteImage(){
-                console.log('We gon delete' + this.image.id)
-                this.hide()
-            },
-            show() {
-                this.$modal.show('delete-modal', )
-            },
-            hide() {
-                this.$modal.hide('delete-modal')
+            emitClick(event) {
+                console.log('emitting ' + event)
+                console.log('image id '+ this.image.id)
+                this.$emit(event, this.image)
             }
         }
     }

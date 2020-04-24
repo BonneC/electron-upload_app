@@ -42,5 +42,8 @@ export default {
                     'Content-Type': 'multipart/form-data'
                 }
             })
+    },
+    deleteImage(id){
+        return apiClient.delete('/gallery/' + id)
     }
 }
