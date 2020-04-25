@@ -7,7 +7,8 @@ import BootstrapVue from 'bootstrap-vue';
 
 import router from './router'
 import store from './store'
-import Navbar from "./components/Navbar";
+import Navbar from "./components/Navbar"
+import Notifications from 'vue-notification'
 
 import VModal from 'vue-js-modal'
 
@@ -23,6 +24,7 @@ Vue.use(BootstrapVue)
 Vue.config.productionTip = false
 
 Vue.use(VModal)
+Vue.use(Notifications)
 
 Vue.component('app-navbar', Navbar)
 Vue.component('ValidationProvider', ValidationProvider)

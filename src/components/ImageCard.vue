@@ -8,8 +8,10 @@
                     <p>Category: {{image.category}}</p>
                     <!--                        <p class="card-text">{{image.description}}</p>-->
                 </div>
-                <input class="the-buttons" type="button" value=" Edit " @click="emitClick('onClickEdit')"/>
-                <input class="tmp" type="button" value=" Delete " @click="emitClick('onClickDelete')"/>
+                <div class="buttons text-center">
+                    <input type="button" value=" Edit " @click="emitClick('onClickEdit')"/>
+                    <input type="button" value=" Delete " @click="emitClick('onClickDelete')"/>
+                </div>
             </div>
 
         </div>
@@ -35,7 +37,7 @@
         methods: {
             emitClick(event) {
                 console.log('emitting ' + event)
-                console.log('image id '+ this.image.id)
+                console.log('image id ' + this.image.id)
                 this.$emit(event, this.image)
             }
         }
@@ -43,24 +45,35 @@
 </script>
 
 <style scoped>
-    .show-image {
+    div.show-image {
         position: relative;
         float: left;
         margin: 5px;
     }
 
-    .show-image:hover input {
+    div.show-image:hover .buttons {
         display: block;
     }
 
-    .show-image input {
+    div.show-image .buttons {
         position: absolute;
+        margin-top: calc(50vh - 120px);
         top: 0;
         left: 0;
-        display: none;
+        right: 0;
+        width: 100%;
+        opacity: 0;
     }
 
-    .tmp {
-        margin-left: 100px;
+    div.show-image:hover .buttons {
+        transform: translateY(-3px);
+        transition: .2s ease-in;
+        opacity: 1;
     }
+
+    .buttons input:hover {
+        transform: translateY(-3px);
+        transition: .2s ease-in;
+    }
+
 </style>

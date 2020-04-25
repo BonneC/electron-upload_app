@@ -77,9 +77,17 @@
 
                 ImagesService.postImage(this.image_info).then(response => {
                     console.log(response.data)
+                    this.$store.dispatch('notifyEvent', {
+                        title: 'SUKSES',
+                        text: 'Uploaded imazh suksesfuli'
+                    })
                     router.push({name: 'home'})
                 })
                     .catch(error => {
+                        this.$store.dispatch('notifyEvent', {
+                            title: 'ERROR',
+                            text: 'Failed imazh upload'
+                        })
                         console.log('error:' + error.response)
                     })
             },

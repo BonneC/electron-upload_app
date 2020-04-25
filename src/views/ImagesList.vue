@@ -33,7 +33,7 @@
                     </div>
                     <button type="button" v-if="disabled" @click="enableEdit" class="btn btn-primary">Edit</button>
 
-                    <button type="button" class="btn btn-secondary">Cancel</button>
+                    <button type="button" class="btn btn-secondary" @click="hide('edit-modal')">Cancel</button>
                 </form>
             </ValidationObserver>
         </modal>
@@ -112,10 +112,20 @@
                 ImagesService.deleteImage(this.id).then(response => {
                     console.log(response.data)
                     this.getImages()
+                    this.$store.dispatch('notifyEvent', {
+                        title: 'SUKSES',
+                        text: 'Deleted imazh suksesfuli'
+                    })
                     this.hide('delete-modal')
+
+
                 })
                     .catch(error => {
                         console.log('error:' + error.response)
+                        this.$store.dispatch('notifyEvent', {
+                            title: 'ERROR',
+                            text: 'Couldnt delete imazh'
+                        })
                     })
             },
             hide(modal) {
@@ -141,9 +151,17 @@
                     console.log(response.data)
                     this.getImages()
                     this.hide('edit-modal')
+                    this.$store.dispatch('notifyEvent', {
+                        title: 'SUKSES',
+                        text: 'Edited imazh suksesfuli'
+                    })
                 })
                     .catch(error => {
                         console.log('error:' + error.response)
+                        this.$store.dispatch('notifyEvent', {
+                            title: 'ERROR',
+                            text: 'Imazh not edited suksesfuli'
+                        })
                     })
             }
         },
