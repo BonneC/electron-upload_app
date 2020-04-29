@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div :style="cssVars">
         <h1>List of The Images for {{category}}</h1>
         <ImageCard class="show-image"
                    v-for="image in images" :key="image.id" :image="image"
@@ -7,34 +7,52 @@
                    v-on:onClickDelete="showDelete"
         >
         </ImageCard>
-        <modal name="edit-modal" @before-open="beforeOpen">
+        <modal name="edit-modal" @before-open="beforeOpen" :width="modalWidth" :focus-trap="true" :height="400">
             <ValidationObserver v-slot="{ handleSubmit, reset }" ref="form">
-                <form @submit.prevent="handleSubmit(onSubmit)" @reset.prevent="reset">
-                    <div class="form-group col-md-6">
-                        <label for="imageName">Image Name</label>
-                        <ValidationProvider name="imageName" rules="min:4|required" v-slot="{errors}">
-                            <input :disabled="disabled" type="text" v-model="title" class="form-control" id="imageName">
-                            <ul>
-                                <li v-for="error in errors" :key="error.ruleId">{{ error }}</li>
-                            </ul>
-                        </ValidationProvider>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-2">
+                <div class="box">
+                    <div class="box-part" id="bp-left">
+                        <form @submit.prevent="handleSubmit(onSubmit)" @reset.prevent="reset">
+
+                            <label for="imageName">Image Name</label>
+                            <ValidationProvider name="imageName" rules="min:4|required" v-slot="{errors}">
+                                <input :disabled="disabled" type="text" v-model="title"
+                                       class="form-control mb-4" id="imageName">
+                                <ul>
+                                    <li v-for="error in errors" :key="error.ruleId">{{ error }}</li>
+                                </ul>
+                            </ValidationProvider>
                             <label for="inputCat">Category</label>
-                            <select :disabled="disabled" id="inputCat" class="form-control">
+                            <select :disabled="disabled" id="inputCat"
+                                    class="browser-default custom-select mb-4">
                                 <option :selected="cat === 'cat1'">Graphs</option>
                                 <option :selected="cat === 'cat2'">Drawings</option>
                             </select>
-                        </div>
-                        <div class="form-group col-md-2">
-                            <button type="submit" v-if="!disabled" class="btn btn-primary">Submit</button>
+                            <div class="button-set">
+                                <button type="button" :disabled="!disabled" @click="enableEdit"
+                                        class="btn btn-info btn-block">Edit
+                                </button>
+                                <button type="button" @click="hide('edit-modal')"
+                                        class="btn btn-info btn-block">Cancel
+                                </button>
+                            </div>
+                            <div class="form-group">
+
+                            </div>
+                            <!--                    v-if="disabled"-->
+                            <div class="form-group">
+                                <button type="submit" v-if="!disabled"
+                                        class="btn btn-info btn-block">Submit
+                                </button>
+                            </div>
+
+
+                        </form>
+                    </div>
+                    <div class="box-part" id="bp-right" :style="{background: 'url(' + selectedImage + ') no-repeat top left'}">
+                        <div class="box-messages">
                         </div>
                     </div>
-                    <button type="button" v-if="disabled" @click="enableEdit" class="btn btn-primary">Edit</button>
-
-                    <button type="button" class="btn btn-secondary" @click="hide('edit-modal')">Cancel</button>
-                </form>
+                </div>
             </ValidationObserver>
         </modal>
         <modal name="delete-modal">
@@ -51,6 +69,7 @@
     import ImagesService from "../services/ImagesService";
     import ImageCard from "../components/ImageCard";
 
+    const MODAL_WIDTH = 656
     export default {
         name: "ImagesList",
         components: {
@@ -68,11 +87,24 @@
                 title: '',
                 cat: '',
                 id: '',
-                disabled: true
+                selectedImage: '',
+                disabled: true,
+                modalWidth: MODAL_WIDTH
             }
 
         },
-        computed: {},
+        created() {
+            this.getImages()
+            this.modalWidth =
+                window.innerWidth < MODAL_WIDTH ? MODAL_WIDTH / 2 : MODAL_WIDTH
+        },
+        computed: {
+            cssVars() {
+                return {
+                    '--selected-image': this.selectedImage
+                }
+            }
+        },
         methods: {
             getImages() {
                 ImagesService.getImagesCat(this.category)
@@ -89,6 +121,8 @@
                 this.title = img.title
                 this.cat = img.cat
                 this.id = img.id
+                this.selectedImage = 'http://localhost:8000/image/' + this.id
+
             },
             enableEdit() {
                 this.disabled = false
@@ -170,17 +204,11 @@
                 console.log('Prop changed: ', newVal, ' | was: ', oldVal)
                 this.getImages()
             }
-        },
-        created() {
-            this.getImages()
         }
     }
 </script>
 
-<style scoped>
-    .card {
-        margin-left: 300px;
-    }
+<style scoped lang="scss">
 
 
 </style>

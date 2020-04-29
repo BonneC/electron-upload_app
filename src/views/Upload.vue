@@ -1,37 +1,48 @@
 <template>
     <div class="about">
-        <h1>This is where you gon upload</h1>
-        <ValidationObserver v-slot="{ handleSubmit, reset }" ref="form">
-            <form @submit.prevent="handleSubmit(onSubmit)" @reset.prevent="reset">
-                <div class="form-group col-md-6">
-                    <label for="imageName">Image Name</label>
-                    <ValidationProvider name="imageName" rules="alpha_num|min:4|required" v-slot="{errors}">
-                        <input type="text" v-model="image_info.name" class="form-control" id="imageName">
-                        <ul>
-                            <li v-for="error in errors" :key="error.ruleId">{{ error }}</li>
-                        </ul>
-                    </ValidationProvider>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-2">
-                        <label for="inputCat">Category</label>
-                        <select id="inputCat" v-model="cat" class="form-control">
-                            <option>Graphs</option>
-                            <option>Drawings</option>
-                        </select>
+        <!--        <h1>This is where you gon upload</h1>-->
+        <div class="box">
+            <div class="box-part" id="bp-left">
+                <div class="partition" id="partition-register">
+                    <div class="partition-title">UPLOAD IMAGE</div>
+                    <div class="partition-form">
+                        <ValidationObserver v-slot="{ handleSubmit, reset }" ref="form">
+                            <form @submit.prevent="handleSubmit(onSubmit)" @reset.prevent="reset" autocomplete="off">
+
+
+                                <ValidationProvider name="imageName" rules="alpha_num|min:4|required"
+                                                    v-slot="{errors}">
+                                    <input type="text" v-model="image_info.name" class="form-control"
+                                           id="imageName" placeholder="Image Title">
+                                    <ul>
+                                        <li v-for="error in errors" :key="error.ruleId">{{ error }}</li>
+                                    </ul>
+                                </ValidationProvider>
+                                <div style="margin-top: 42px">
+                                </div>
+                                <label for="inputCat" id="catStyle">Category</label>
+                                <select id="inputCat" v-model="cat" class="form-control">
+                                    <option>Graphs</option>
+                                    <option>Drawings</option>
+                                </select>
+                                <div style="margin-top: 42px">
+                                </div>
+                                <ValidationProvider rules="required|ext:jpg,png" ref="provider"
+                                                    v-slot="{ validate, errors }">
+                                    <label for="inputFile"  class="custom-file-upload">
+                                        <i class="fa fa-cloud-upload"></i>Choose Image</label>
+                                    <input type="file" @change="onImageChange"
+                                           class="form-control-file large-btn github-btn"
+                                           id="inputFile">
+                                    <span>{{ errors[0] }}</span>
+                                </ValidationProvider>
+                                <button type="submit" class="large-btn facebook-btn">Submit</button>
+                            </form>
+                        </ValidationObserver>
                     </div>
-                    <div class="form-group col-md-4">
-                        <label for="inputFile">File input</label>
-                        <ValidationProvider rules="required|ext:jpg,png" ref="provider" v-slot="{ validate, errors }">
-                            <input type="file" @change="onImageChange" class="form-control-file"
-                                   id="inputFile">
-                            <span>{{ errors[0] }}</span>
-                        </ValidationProvider>
-                    </div>
                 </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
-        </ValidationObserver>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -54,9 +65,9 @@
         methods: {
             async onImageChange(e) {
                 console.log('imagechangelog')
-                const { valid } = await this.$refs.provider.validate(e)
+                const {valid} = await this.$refs.provider.validate(e)
 
-                if(valid){
+                if (valid) {
                     this.image_info.upload_file = e.target.files[0]
                     console.log(e.target.files[0])
                 }
@@ -91,8 +102,8 @@
                         console.log('error:' + error.response)
                     })
             },
-            setCategory(){
-                if(this.cat === 'Graphs')
+            setCategory() {
+                if (this.cat === 'Graphs')
                     this.image_info.category = 'cat1'
                 else
                     this.image_info.category = 'cat2'
@@ -101,6 +112,44 @@
     }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+    $github_color: #dba226;
+    .custom-file-upload {
+        text-align: center;
+        background: white;
+        border-radius: 4px;
+        box-sizing: border-box;
+        /*border: 1px solid #ccc;*/
+        padding: 10px;
+        letter-spacing: 1px;
+        font-family: 'Open Sans', sans-serif;
+        font-weight: 400;
+        min-width: 140px;
+        margin-top: 8px;
+        display: inline-block;
+        cursor: pointer;
+        border: 1px solid $github_color;
+        color: $github_color;
+        text-transform: uppercase;
+        transition: 0.1s all;
+        font-size: 10px;
+        /*padding: 6px 12px;*/
 
+        &:hover {
+            border-color: $github_color;
+            background: $github_color;
+            color: white;
+            /*border-color: mix(#dddedf, black, 90%);*/
+            /*color: mix(#8b8c8d, black, 80%);*/
+        }
+    }
+    #catStyle{
+        box-sizing: border-box;
+        padding: 5px;
+        width: 100%;
+        text-align: center;
+        letter-spacing: 1px;
+        font-size: 20px;
+        font-weight: 300;
+    }
 </style>

@@ -9,7 +9,7 @@ import router from './router'
 import store from './store'
 import Navbar from "./components/Navbar"
 import Notifications from 'vue-notification'
-
+import './assets/css/style.scss'
 import VModal from 'vue-js-modal'
 
 
