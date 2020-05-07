@@ -11,54 +11,69 @@
             <ValidationObserver v-slot="{ handleSubmit, reset }" ref="form">
                 <div class="box">
                     <div class="box-part" id="bp-left">
-                        <form @submit.prevent="handleSubmit(onSubmit)" @reset.prevent="reset">
+                        <div class="partition">
+                            <div class="partition-title" style="padding: 15px">EDIT IMAGE</div>
+                            <div class="partition-form">
+                                <form @submit.prevent="handleSubmit(onSubmit)" @reset.prevent="reset">
 
-                            <label for="imageName">Image Name</label>
-                            <ValidationProvider name="imageName" rules="min:4|required" v-slot="{errors}">
-                                <input :disabled="disabled" type="text" v-model="title"
-                                       class="form-control mb-4" id="imageName">
-                                <ul>
-                                    <li v-for="error in errors" :key="error.ruleId">{{ error }}</li>
-                                </ul>
-                            </ValidationProvider>
-                            <label for="inputCat">Category</label>
-                            <select :disabled="disabled" id="inputCat"
-                                    class="browser-default custom-select mb-4">
-                                <option :selected="cat === 'cat1'">Graphs</option>
-                                <option :selected="cat === 'cat2'">Drawings</option>
-                            </select>
-                            <div class="button-set">
-                                <button type="button" :disabled="!disabled" @click="enableEdit"
-                                        class="btn btn-info btn-block">Edit
-                                </button>
-                                <button type="button" @click="hide('edit-modal')"
-                                        class="btn btn-info btn-block">Cancel
-                                </button>
+                                    <label for="imageName" class="catStyle">Image Name</label>
+                                    <ValidationProvider name="imageName" rules="min:4|required" v-slot="{errors}">
+                                        <input :disabled="disabled" type="text" v-model="title"
+                                               class="form-control mb-4" id="imageName">
+                                        <ul>
+                                            <li v-for="error in errors" :key="error.ruleId">{{ error }}</li>
+                                        </ul>
+                                    </ValidationProvider>
+                                    <label for="inputCat" class="catStyle">Category</label>
+                                    <select :disabled="disabled" id="inputCat"
+                                            class="form-control" data-style="btn btn-primary">
+                                        <option :selected="cat === 'cat1'">Graphs</option>
+                                        <option :selected="cat === 'cat2'">Drawings</option>
+                                    </select>
+                                    <div class="button-set">
+                                        <button type="button" :disabled="!disabled" @click="enableEdit"
+                                                style="margin-right: 8px">Edit
+                                        </button>
+                                        <button type="button" class="github-btn" @click="hide('edit-modal')"
+                                        >Cancel
+                                        </button>
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="submit" v-if="!disabled"
+                                                class="large-btn facebook-btn">Submit
+                                        </button>
+                                    </div>
+                                </form>
                             </div>
-                            <div class="form-group">
-
-                            </div>
-                            <!--                    v-if="disabled"-->
-                            <div class="form-group">
-                                <button type="submit" v-if="!disabled"
-                                        class="btn btn-info btn-block">Submit
-                                </button>
-                            </div>
-
-
-                        </form>
+                        </div>
                     </div>
-                    <div class="box-part" id="bp-right" :style="{background: 'url(' + selectedImage + ') no-repeat top left'}">
+                    <div class="box-part" id="bp-right"
+                         :style="{background: 'url(' + selectedImage + ') no-repeat top left'}">
                         <div class="box-messages">
                         </div>
                     </div>
                 </div>
             </ValidationObserver>
         </modal>
-        <modal name="delete-modal">
-            <h1>Delete image?</h1>
-            <button type="button" class="btn btn-primary" @click="onDelete">Yes</button>
-            <button type="button" class="btn btn-primary" @click="hide('delete-modal')">Cancel</button>
+        <modal name="delete-modal" @before-open="beforeOpen">
+
+            <div class="box ">
+                <div class="box-part">
+                    <div class="partition" id="partition-register">
+                        <div class="partition-title">DELETE IMAGE</div>
+                        <div class="partition-form" style="margin-top: 20px">
+                            <button type="button" class="btn btn-primary" @click="onDelete">Yes</button>
+                            <button type="button" class="btn btn-primary" @click="hide('delete-modal')">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="box-part"
+                     :style="{background: 'url(' + selectedImage + ') no-repeat top left'}">
+                    <div class="box-messages">
+                    </div>
+                </div>
+            </div>
+
 
         </modal>
     </div>
@@ -139,7 +154,11 @@
             showDelete(image) {
                 console.log('Show Delete modal with id ' + image.id)
                 this.id = image.id
-                this.$modal.show('delete-modal')
+                this.$modal.show('delete-modal',{
+                    title: image.title,
+                    cat: image.category,
+                    id: image.id
+                })
             },
             onDelete() {
                 console.log('We gon delete' + this.id)
@@ -167,6 +186,7 @@
             },
             beforeOpen(event) {
                 this.disabled = true
+                console.log(event.params)
                 this.setInfo(event.params)
                 console.log(event.params);
             },
@@ -209,6 +229,8 @@
 </script>
 
 <style scoped lang="scss">
-
+    label {
+        font-size: 15px;
+    }
 
 </style>

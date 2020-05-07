@@ -10,6 +10,7 @@ import store from './store'
 import Navbar from "./components/Navbar"
 import Notifications from 'vue-notification'
 import './assets/css/style.scss'
+import './assets/fonts/font-awesome-4.7.0/css/font-awesome.min.css'
 import VModal from 'vue-js-modal'
 
 

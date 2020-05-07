@@ -1,44 +1,63 @@
 <template>
-    <div class="about">
+    <div class="container-fluid about">
         <!--        <h1>This is where you gon upload</h1>-->
-        <div class="box">
-            <div class="box-part" id="bp-left">
-                <div class="partition" id="partition-register">
-                    <div class="partition-title">UPLOAD IMAGE</div>
-                    <div class="partition-form">
-                        <ValidationObserver v-slot="{ handleSubmit, reset }" ref="form">
-                            <form @submit.prevent="handleSubmit(onSubmit)" @reset.prevent="reset" autocomplete="off">
+        <div class="row justify-content-center">
+            <div class="box col-md-6">
+                <div class="box-part" id="bp-left">
+                    <div class="partition" id="partition-register">
+                        <div class="partition-title">UPLOAD IMAGE</div>
+                        <div class="partition-form">
+                            <ValidationObserver v-slot="{ handleSubmit, reset }" ref="form">
+                                <form @submit.prevent="handleSubmit(onSubmit)" @reset.prevent="reset"
+                                      autocomplete="off">
+                                    <div class="autocomplete-fix">
+                                        <input disabled type="password">
+                                    </div>
 
 
-                                <ValidationProvider name="imageName" rules="alpha_num|min:4|required"
-                                                    v-slot="{errors}">
-                                    <input type="text" v-model="image_info.name" class="form-control"
-                                           id="imageName" placeholder="Image Title">
-                                    <ul>
-                                        <li v-for="error in errors" :key="error.ruleId">{{ error }}</li>
-                                    </ul>
-                                </ValidationProvider>
-                                <div style="margin-top: 42px">
-                                </div>
-                                <label for="inputCat" id="catStyle">Category</label>
-                                <select id="inputCat" v-model="cat" class="form-control">
-                                    <option>Graphs</option>
-                                    <option>Drawings</option>
-                                </select>
-                                <div style="margin-top: 42px">
-                                </div>
-                                <ValidationProvider rules="required|ext:jpg,png" ref="provider"
-                                                    v-slot="{ validate, errors }">
-                                    <label for="inputFile"  class="custom-file-upload">
-                                        <i class="fa fa-cloud-upload"></i>Choose Image</label>
-                                    <input type="file" @change="onImageChange"
-                                           class="form-control-file large-btn github-btn"
-                                           id="inputFile">
-                                    <span>{{ errors[0] }}</span>
-                                </ValidationProvider>
-                                <button type="submit" class="large-btn facebook-btn">Submit</button>
-                            </form>
-                        </ValidationObserver>
+                                    <ValidationProvider name="imageName" rules="alpha_num|min:4|required"
+                                                        v-slot="{errors}">
+                                        <label for="imageName" class="catStyle">Image Title</label>
+                                        <input type="text" v-model="image_info.name" class="form-control"
+                                               id="imageName">
+                                        <ul class=" list-group list-group-flush">
+                                            <li v-for="error in errors" :key="error.ruleId"
+                                                class="flist-item list-group-item">
+                                                <i class="fa fa-exclamation-circle" style="padding-right: 10px"></i>
+                                                {{ error }}</li>
+                                        </ul>
+                                    </ValidationProvider>
+                                    <div style="margin-top: 20px">
+                                    </div>
+                                    <label for="inputCat" class="catStyle">Category</label>
+                                    <select id="inputCat" v-model="cat" class="form-control" data-style="btn btn-primary">
+                                        <option>Graphs</option>
+                                        <option>Drawings</option>
+                                    </select>
+                                    <div style="margin-top: 20px">
+                                    </div>
+                                    <ValidationProvider rules="required|ext:jpg,png" ref="provider"
+                                                        v-slot="{ validate, errors }">
+                                        <label for="inputFile" class="custom-file-upload">
+                                            <i class="fa fa-cloud-upload" style="font-size: 15px; padding-right: 10px"></i>
+                                            Choose Image</label>
+                                        <input type="file" @change="onImageChange"
+                                               class="form-control-file large-btn github-btn"
+                                               id="inputFile">
+                                        <ul class=" list-group list-group-flush">
+                                            <li v-for="error in errors" :key="error.ruleId"
+                                                class="flist-item list-group-item">
+                                                <i class="fa fa-exclamation-circle" style="padding-right: 10px"></i>
+                                                {{ error }}</li>
+                                        </ul>
+<!--                                        <span>{{ errors[0] }}</span>-->
+                                    </ValidationProvider>
+                                    <div style="margin-top: 42px">
+                                    </div>
+                                    <button type="submit" class="large-btn facebook-btn">Submit</button>
+                                </form>
+                            </ValidationObserver>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -133,6 +152,7 @@
         text-transform: uppercase;
         transition: 0.1s all;
         font-size: 10px;
+        width: 100%;
         /*padding: 6px 12px;*/
 
         &:hover {
@@ -143,13 +163,6 @@
             /*color: mix(#8b8c8d, black, 80%);*/
         }
     }
-    #catStyle{
-        box-sizing: border-box;
-        padding: 5px;
-        width: 100%;
-        text-align: center;
-        letter-spacing: 1px;
-        font-size: 20px;
-        font-weight: 300;
-    }
+
+
 </style>
