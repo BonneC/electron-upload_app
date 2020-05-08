@@ -1,5 +1,5 @@
 <template>
-    <div :style="cssVars">
+    <div :style="cssVars" id="imagesList">
         <h1>List of The Images for {{category}}</h1>
         <ImageCard class="show-image"
                    v-for="image in images" :key="image.id" :image="image"
@@ -47,9 +47,10 @@
                             </div>
                         </div>
                     </div>
-                    <div class="box-part" id="bp-right"
-                         :style="{background: 'url(' + selectedImage + ') no-repeat top left'}">
-                        <div class="box-messages">
+                    <!--                    :style="{background: 'url(' + selectedImage + ') no-repeat top left'}">-->
+                    <div class="box-part" id="bp-right" style="background: black">
+                        <div class="thumbnail">
+                            <img :src="selectedImage"/>
                         </div>
                     </div>
                 </div>
@@ -67,10 +68,14 @@
                         </div>
                     </div>
                 </div>
-                <div class="box-part"
-                     :style="{background: 'url(' + selectedImage + ') no-repeat top left'}">
-                    <div class="box-messages">
+                <!--                :style="{background: 'url(' + selectedImage + ') no-repeat top left'}"-->
+                <div class="box-part" style="background: black"
+                >
+                    <div class="thumbnail">
+                        <img :src="selectedImage"/>
                     </div>
+                    <!--                    <div class="box-messages">-->
+                    <!--                    </div>-->
                 </div>
             </div>
 
@@ -154,7 +159,7 @@
             showDelete(image) {
                 console.log('Show Delete modal with id ' + image.id)
                 this.id = image.id
-                this.$modal.show('delete-modal',{
+                this.$modal.show('delete-modal', {
                     title: image.title,
                     cat: image.category,
                     id: image.id
@@ -229,8 +234,34 @@
 </script>
 
 <style scoped lang="scss">
+    #imagesList{
+        background: whitesmoke;
+    }
     label {
         font-size: 15px;
+    }
+
+    .thumbnail {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+    }
+
+    .thumbnail img {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        height: 100%;
+        width: auto;
+        -webkit-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+    }
+
+    .thumbnail img.portrait {
+        width: 100%;
+        height: auto;
     }
 
 </style>

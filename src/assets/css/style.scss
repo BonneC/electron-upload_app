@@ -3,6 +3,24 @@
 $background_color: #404142;
 $github_color: #dba226;
 $facebook_color: #6b7eaa;
+
+* {
+  border-radius: 0 !important;
+}
+html {
+  background: #eeeeee;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+
+.card{
+  box-shadow: 5px 5px 10px grey;
+  border: none;
+}
+
 .catStyle {
   font-family: "Roboto";
   box-sizing: border-box;
@@ -10,7 +28,7 @@ $facebook_color: #6b7eaa;
   width: 100%;
   text-align: center;
   letter-spacing: 1px;
-  font-size: 20px;
+  font-size: 15px;
   font-weight: 300;
 }
 

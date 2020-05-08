@@ -1,12 +1,13 @@
 <template>
-    <div>
+    <div id="imageCard">
         <div class="col-md-4">
-            <div class="show-image card" style="width: 50rem;">
-                <img class="card-img-top" :src="image_url" alt="image">
+            <div class="show-image card">
+                <div class="thumbnail" style="background: black">
+                    <img class="card-img-top" :src="image_url" alt="image">
+                </div>
                 <div class="card-body">
-                    <h5 class="card-title">{{image.title}} with id {{image.id}}</h5>
-                    <p>Category: {{image.category}}</p>
-                    <!--                        <p class="card-text">{{image.description}}</p>-->
+                    <div class="img-title">{{image.title}} with id {{image.id}}</div>
+                    <div class="catStyle">Category: {{image.category}}</div>
                 </div>
                 <div class="buttons text-center ">
                     <input type="button" value=" Edit "
@@ -47,6 +48,42 @@
 </script>
 
 <style scoped lang="scss">
+    #imageCard{
+    }
+    .card-body {
+        padding: 0;
+    }
+
+    .img-title {
+        font-family: "Roboto";
+        letter-spacing: 1px;
+        font-size: 20px;
+        font-weight: 500;
+    }
+
+    .thumbnail {
+        position: relative;
+        width: 200px;
+        height: 200px;
+        overflow: hidden;
+    }
+
+    .thumbnail img {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        height: 100%;
+        width: auto;
+        -webkit-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+    }
+
+    .thumbnail img.portrait {
+        width: 100%;
+        height: auto;
+    }
+
     div.show-image {
         position: relative;
         float: left;
@@ -59,7 +96,7 @@
 
     div.show-image .buttons {
         position: absolute;
-        margin-top: 200px;
+        margin-top: 50px;
         top: 0;
         left: 0;
         right: 0;

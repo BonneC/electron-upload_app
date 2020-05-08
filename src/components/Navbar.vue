@@ -45,5 +45,8 @@
 </script>
 
 <style scoped>
-
+    .navbar{
+        box-shadow: 1px 5px 10px #dcdcdc;
+        border: none;
+    }
 </style>
