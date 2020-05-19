@@ -4,7 +4,8 @@
       <app-navbar></app-navbar>
     </div>
     <notifications group="foo" />
-    <router-view/>
+
+    <div class="container-fluid" style="height: calc(100vh - 80px);"><router-view/></div>
   </div>
 </template>
 
@@ -15,19 +16,9 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  background: #eeeeee;
+  /*background: #fafbfd;*/
+  background: #f6f6f6;
 }
 
-#nav {
-  padding: 30px;
-}
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
 </style>

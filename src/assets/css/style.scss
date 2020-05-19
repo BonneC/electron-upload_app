@@ -7,17 +7,19 @@ $facebook_color: #6b7eaa;
 * {
   border-radius: 0 !important;
 }
+
 html {
-  background: #eeeeee;
+  background-color: #f6f6f6;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
 }
 
+//fafbfd
 
-.card{
-  box-shadow: 5px 5px 10px grey;
+.card {
+  box-shadow: 1px 1px 10px #e3e3e3;
   border: none;
 }
 
@@ -36,6 +38,16 @@ html {
   font-family: "Roboto Light";
   color: $github_color;
   /*font-weight: 400;*/
+}
+.partition-title {
+  font-family: "Roboto";
+  box-sizing: border-box;
+  padding: 30px;
+  width: 100%;
+  text-align: center;
+  letter-spacing: 1px;
+  font-size: 30px;
+  font-weight: 500;
 }
 
 .box {
@@ -187,10 +199,10 @@ html {
       color: white;
     }
 
-    &:disabled{
+    &:disabled {
       background: darkgrey;
 
-      &:hover{
+      &:hover {
         border: 1px solid #dddedf;
         color: #8b8c8d;
       }

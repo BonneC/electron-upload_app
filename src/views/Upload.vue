@@ -1,8 +1,8 @@
 <template>
-    <div class="container-fluid about">
+    <div class="container-fluid about" >
         <!--        <h1>This is where you gon upload</h1>-->
-        <div class="row justify-content-center">
-            <div class="box col-md-6">
+        <div class="row justify-content-center" style="padding-top: 30px">
+            <div class="box col-md-6" id="upload" >
                 <div class="box-part" id="bp-left">
                     <div class="partition" id="partition-register">
                         <div class="partition-title">UPLOAD IMAGE</div>
@@ -163,6 +163,10 @@
             /*color: mix(#8b8c8d, black, 80%);*/
         }
     }
-
+    #upload{
+        /*border: 1px solid #cbcbcb; */
+        padding-bottom:100px;
+        box-shadow: 1px 1px 10px #e3e3e3;
+    }
 
 </style>

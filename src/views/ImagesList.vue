@@ -1,6 +1,6 @@
 <template>
-    <div :style="cssVars" id="imagesList">
-        <h1>List of The Images for {{category}}</h1>
+    <div :style="cssVars" id="imagesList" class="container-fluid clearfix">
+        <div class="partition-title">LIST OF THE IMAGES FOR {{category}}</div>
         <ImageCard class="show-image"
                    v-for="image in images" :key="image.id" :image="image"
                    v-on:onClickEdit="showEdit"
@@ -235,7 +235,10 @@
 
 <style scoped lang="scss">
     #imagesList{
-        background: whitesmoke;
+        background: #ffffff;
+        padding-bottom:100px;
+        margin-top: 30px;
+        box-shadow: 1px 1px 10px #e3e3e3;
     }
     label {
         font-size: 15px;
@@ -262,6 +265,19 @@
     .thumbnail img.portrait {
         width: 100%;
         height: auto;
+    }
+
+    @mixin clearfix() {
+        &::after {
+            display: block;
+            content: "";
+            clear: both;
+        }
+    }
+
+    // Usage as a mixin
+    .element {
+        @include clearfix;
     }
 
 </style>
